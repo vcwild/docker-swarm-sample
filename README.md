@@ -2,7 +2,7 @@
 
 - [Voting app](https://github.com/dockersamples/example-voting-app) official repo includes implementation on k8s
 
-# How to run
+## How to Run
 
 Make sure you have Docker Swarm initialized
 
@@ -16,15 +16,15 @@ While inside a node manager, run
 docker stack deploy --compose-file docker-compose.yml vote
 ```
 
-# Endpoints
+## Endpoints
 
 - [ip]:8080 swarm visualizer
 - [ip]:5000 vote
 - [ip]:5001 voting results
 
-# Docker Swarm & Docker Machine Tips
+## Docker Swarm & Docker Machine Tips
 
-## Backup Docker Swarm
+### Backup Docker Swarm
 
 SSH into the docker machine (if exists)
 
@@ -46,7 +46,7 @@ sudo su
 cp -r /var/lib/docker/swarm backup
 ```
 
-## Restore Docker Swarm
+### Restore Docker Swarm
 
 While in the Docker Swarm manager node
 
@@ -62,20 +62,21 @@ cp -r backup/* /var/lib/docker/swarm
 docker swarm init --force-new-cluster --advertise-addr [ip-address]
 ```
 
-## How to format Docker Node output 
+### How to format Docker Node output
 
 - For Host and Manager status
 
 ```{sh}
 docker node ls --format "HOST: {{.Hostname}} MAN: {{.ManagerStatus}}"
 ```
-## Create service 
+
+### Create service
 
 ```{sh}
 docker service create --name [service-name] --replicas [n-replicas] -p [bind-address]:[container-address] [image]
 ```
 
-### Global mode
+#### Global mode
 
 - Global mode will replicate the service in all nodes
 
@@ -83,8 +84,7 @@ docker service create --name [service-name] --replicas [n-replicas] -p [bind-add
 docker service create --name [service-name] -p [bind-address]:[container-address] --mode global [image]
 ```
 
-
-## How to stop all Docker services
+### How to stop all Docker services
 
 While in a Docker Swarm manager node
 
@@ -92,19 +92,19 @@ While in a Docker Swarm manager node
 docker service rm $(docker service ls -q)
 ```
 
-## How to avoid service attribution to a node
+### How to avoid service attribution to a node
 
 ```{sh}
 docker node update --availability drain [hostname]
 ```
 
-## How to list all services being executed
+### How to list all services being executed
 
 ```{sh}
 docker service ps $(docker service ls -q)
 ```
 
-## How to add service role constraints
+### How to add service role constraints
 
 Service can only be executed in worker nodes
 
@@ -119,12 +119,12 @@ docker service update --constraint-add node.id==[node-id] [service-id]
 ```
 
 Service can only be executed in the following host
+
 ```{sh}
 docker service update --constraint-add node.hostname==[host-name] [service-id]
 ```
 
-## How to remove service role constraints
-
+### How to remove service role constraints
 
 ```{sh}
 docker service update --constraint-rm node.id==[node-id] [service-id]
@@ -132,18 +132,20 @@ docker service update --constraint-rm node.id==[node-id] [service-id]
 docker service update --constraint-rm node.hostname==[host-name] [service-id]
 ```
 
-## Create service replicas
+### Create service replicas
 
 - Using service update
 
 ```{sh}
 docker service update --replicas [n-replicas] [service-id]
 ```
+
 - ALT: Using service scale
 
 ```{sh}
 docker service scale [service-id]=[n-replicas]
 ```
-# References
+
+## References
 
 *Docker Samples*. https://github.com/dockersamples
