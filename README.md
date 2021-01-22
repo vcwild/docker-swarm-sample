@@ -1,7 +1,7 @@
 
 ## Backup Docker Swarm
 
-### Using Docker Machine & Docker Swarm
+Using Docker Machine & Docker Swarm
 
 ```{sh}
 docker-machine ssh [docker machine]
@@ -44,6 +44,20 @@ docker swarm init --force-new-cluster --advertise-addr [ip address]
 ```{sh}
 docker node ls --format "HOST: {{.Hostname}} MAN: {{.ManagerStatus}}"
 ```
+## Create service 
+
+```{sh}
+docker service create --name [service-name] --replicas [n-replicas] -p [bind-address]:[container-address] [image]
+```
+
+### Global mode
+
+- Global mode will replicate the service in all nodes
+
+```{sh}
+docker service create --name [service-name] -p [bind-address]:[container-address] --mode global [image]
+```
+
 
 ## How to stop all Docker services
 
@@ -84,11 +98,24 @@ Service can only be executed in the following host
 docker service update --constraint-add node.hostname==[host-name] [service-id]
 ```
 
-## How to remoev service role constraints
+## How to remove service role constraints
 
 
 ```{sh}
 docker service update --constraint-rm node.id==[node-id] [service-id]
 
 docker service update --constraint-rm node.hostname==[host-name] [service-id]
+```
+
+## Create service replicas
+
+- Using service update
+
+```{sh}
+docker service update --replicas [n-replicas] [service-id]
+```
+- ALT: Using service scale
+
+```{sh}
+docker service scale [service-id]=[n-replicas]
 ```
