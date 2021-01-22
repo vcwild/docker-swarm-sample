@@ -1,7 +1,32 @@
+# Docker sample swarm orchestration
+
+- [Voting app](https://github.com/dockersamples/example-voting-app) official repo includes implementation on k8s
+
+# How to run
+
+Make sure you have Docker Swarm initialized
+
+```{sh}
+docker swarm init
+```
+
+While inside a node manager, run
+
+```{sh}
+docker stack deploy --compose-file docker-compose.yml vote
+```
+
+# Endpoints
+
+- [ip]:8080 swarm visualizer
+- [ip]:5000 vote
+- [ip]:5001 voting results
+
+# Docker Swarm & Docker Machine Tips
 
 ## Backup Docker Swarm
 
-Using Docker Machine & Docker Swarm
+SSH into the docker machine (if exists)
 
 ```{sh}
 docker-machine ssh [docker machine]
@@ -34,7 +59,7 @@ cp -r backup/* /var/lib/docker/swarm
 - Restart the cluster
 
 ```{sh}
-docker swarm init --force-new-cluster --advertise-addr [ip address]
+docker swarm init --force-new-cluster --advertise-addr [ip-address]
 ```
 
 ## How to format Docker Node output 
@@ -119,3 +144,6 @@ docker service update --replicas [n-replicas] [service-id]
 ```{sh}
 docker service scale [service-id]=[n-replicas]
 ```
+# References
+
+*Docker Samples*. https://github.com/dockersamples
