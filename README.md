@@ -64,3 +64,31 @@ docker node update --availability drain [hostname]
 ```{sh}
 docker service ps $(docker service ls -q)
 ```
+
+## How to add service role constraints
+
+Service can only be executed in worker nodes
+
+```{sh}
+docker service update --constraint-add node.role==worker [service-id]
+```
+
+Service can only be executed in the following node id
+
+```{sh}
+docker service update --constraint-add node.id==[node-id] [service-id]
+```
+
+Service can only be executed in the following host
+```{sh}
+docker service update --constraint-add node.hostname==[host-name] [service-id]
+```
+
+## How to remoev service role constraints
+
+
+```{sh}
+docker service update --constraint-rm node.id==[node-id] [service-id]
+
+docker service update --constraint-rm node.hostname==[host-name] [service-id]
+```
